@@ -1,2 +1,145 @@
 // @import './common';
 // @import './example';
+
+// #68513F -text
+// #e7ded8 - ramka img
+// Style Script - font
+// STSong - main font
+// Inter - font list opys
+
+// font-family: 'Bad Script', cursive;
+// font-family: 'Poiret One', cursive;
+// font-family: 'Style Script', cursive;
+
+body {
+    color: #000000;
+    font-family: 'Bad Script', cursive;
+    font-size: 28px;
+    line-height: 1.71;
+    font-weight: 300;
+  letter-spacing: 0.03em;
+  margin: 0;
+}
+h1,
+h2,
+h3,
+h4,
+h5,
+h6,
+p, ul {
+  margin-top: 0;
+  margin-bottom: 0;
+}
+
+// img {
+//   display: block;
+//   max-width: 100%;
+//   width: 100%;
+//   height: auto;
+// }
+
+button {
+  cursor: pointer;
+}
+.section {
+    outline: 2px solid tomato;
+    margin: 0;
+}
+.link {
+    text-decoration: none;
+    text-transform: none;
+  }
+  
+  .list {
+    margin: 0;
+    padding: 0;
+    list-style: none;
+  }
+
+  .container {
+    width: 100%;
+    margin-left: auto;
+    margin-right: auto;
+    padding-left: 15px;
+    padding-right: 15px;
+  }
+  @media screen and (min-width: 480px) {
+    .container {
+      max-width: 480px;
+    }
+  }
+  @media screen and (min-width: 768px) {
+    .container {
+      max-width: 768px;
+    }
+  }
+  @media screen and (min-width: 1200px) {
+    .container {
+      max-width: 1200px;
+    }
+  }
+
+  .hero_tittle {
+    font-size: 38px;
+  }
+.hero__title--modified {
+    font-family: Style Script, cursive;
+    font-size: 60px;
+    display: block;
+    transform: rotate(356deg);
+    padding-left: 350px;
+    color: #68513F;
+}
+
+.hero {
+    padding-top: 30px;
+    padding-bottom: 30px;
+    margin-left: auto;
+    margin-right: auto;
+    background-color: #e7ded8;
+    background-image: url(../images/hero_1280.jpg);
+    background-repeat: no-repeat;
+    background-position: center;
+    background-size: cover;
+    text-align: center;
+}
+
+.search-form {
+    display: flex;
+    position: relative;
+    width: 500px;
+    margin-left: auto;
+    margin-right: auto;
+}
+.name-input {
+display: block;
+  width: 100%;
+  height: 30px;
+  border-radius: 20px;
+  outline: transparent;
+  border: 1px solid #e7ded8;
+  padding: 7px;
+  padding-left: 15px;
+  text-align: center;
+  font-size: 28px;
+  font-family: inherit;
+
+}
+.search-btn {
+position: absolute;
+  top: 6px;
+  right: 6px;
+  height: 35px;
+  text-transform: uppercase;
+  border: none;
+    background-color: transparent;
+}
+.search-btn:hover {
+  scale: 1.25;
+  fill: #68513F;
+}
+.is-hidden {
+    opacity: 0;
+    visibility: hidden;
+    pointer-events: none;
+  }

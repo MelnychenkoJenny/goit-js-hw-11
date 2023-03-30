@@ -3,13 +3,54 @@
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>Page title</title>
+    <title>Search photo</title>
+    <link
+      rel="icon"
+      type="image/png"
+      sizes="32x32"
+      href="./images/favicon.png"
+    />
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Bad+Script&family=Poiret+One&family=Style+Script&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="./sass/index.scss" />
-
   </head>
   <body>
-    <!-- ❗️❗️❗️ Add partials like so for every page -->
-    <!-- <include src="./partials/example.html"></include> -->
-    <script type="module" src="./index.js"></script>
+    <main>
+      <section class="hero section">
+        <div class="container hero--container">
+          <h1 class="hero__title">
+            Пошук зображення на<br /><span class="hero__title--modified">Pixabay API</span>
+          </h1>
+          <p>
+            Можливий пошук зображень на таких мовах світу: <br/>англійська, польська, болгарська.
+          </p>
+            <form class="search-form" id="search-form">
+              <input
+              class="name-input"
+                type="text"
+                name="searchQuery"
+                autocomplete="off"
+                placeholder="Пошук зображень..."
+              />
+              <button type="submit" class="button search-btn">
+                <svg width="32" height="32">
+                  <use href="./images/icon-search.svg#icon-search"></use>
+                </svg>
+              </button>
+            </form>
+          </div>
+        </section>
+        <section class="gallery section">
+          <div class="container gallery--container">
+            <ul class="gallery-list list">
+             
+            </ul>
+            <button type="button" class="load-more is-hidden">Показати ще</button>
+          </div>
+        </section>
+    </main>
+
+    <script src="/src/index.js" type="module"></script>
   </body>
 </html>
