@@ -12,7 +12,7 @@
     />
     <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link href="https://fonts.googleapis.com/css2?family=Bad+Script&family=Poiret+One&family=Style+Script&display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Poiret+One&family=Style+Script&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="./sass/index.scss" />
   </head>
   <body>
@@ -20,8 +20,7 @@
       <section class="hero section">
         <div class="container hero--container">
           <h1 class="hero__title">
-            Пошук зображення на<br /><span class="hero__title--modified">Pixabay API</span>
-          </h1>
+            Пошук зображення на <span class="hero__title--modified">Pixabay API</span></h1> 
           <p>
             Можливий пошук зображень на таких мовах світу: <br/>англійська, польська, болгарська.
           </p>
@@ -42,11 +41,17 @@
           </div>
         </section>
         <section class="gallery section">
+          <h2 class="is-hidden">Знайдені зображення</h2>
           <div class="container gallery--container">
             <ul class="gallery-list list">
              
             </ul>
-            <button type="button" class="load-more is-hidden">Показати ще</button>
+            <button type="button" class="load-more">
+              <svg class="spinner is-hidden" viewBox="0 0 50 50">
+                <circle class="path" cx="25" cy="25" r="20" fill="none" stroke-width="5"></circle>
+              </svg>
+            <span class="label">Показати ще</span>
+          </button>
           </div>
         </section>
     </main>
