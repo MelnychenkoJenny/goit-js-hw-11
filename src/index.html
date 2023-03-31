@@ -10,9 +10,12 @@
       sizes="32x32"
       href="./images/favicon.png"
     />
-    <link rel="preconnect" href="https://fonts.googleapis.com">
-<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link href="https://fonts.googleapis.com/css2?family=Poiret+One&family=Style+Script&display=swap" rel="stylesheet">
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Poiret+One&family=Style+Script&display=swap"
+      rel="stylesheet"
+    />
     <link rel="stylesheet" href="./sass/index.scss" />
   </head>
   <body>
@@ -20,40 +23,48 @@
       <section class="hero section">
         <div class="container hero--container">
           <h1 class="hero__title">
-            Пошук зображення на <span class="hero__title--modified">Pixabay API</span></h1> 
+            Пошук зображення на
+            <span class="hero__title--modified">Pixabay API</span>
+          </h1>
           <p>
-            Можливий пошук зображень на таких мовах світу: <br/>англійська, польська, болгарська.
+            Можливий пошук зображень на таких мовах світу: <br />англійська,
+            польська, болгарська.
           </p>
-            <form class="search-form" id="search-form">
-              <input
+          <form class="search-form" id="search-form">
+            <input
               class="name-input"
-                type="text"
-                name="searchQuery"
-                autocomplete="off"
-                placeholder="Пошук зображень..."
-              />
-              <button type="submit" class="button search-btn">
-                <svg width="32" height="32">
-                  <use href="./images/icon-search.svg#icon-search"></use>
-                </svg>
-              </button>
-            </form>
-          </div>
-        </section>
-        <section class="gallery section">
-          <h2 class="is-hidden">Знайдені зображення</h2>
-          <div class="container gallery--container">
-            <ul class="gallery-list list">
-             
-            </ul>
-            <button type="button" class="load-more">
-              <svg class="spinner is-hidden" viewBox="0 0 50 50">
-                <circle class="path" cx="25" cy="25" r="20" fill="none" stroke-width="5"></circle>
+              type="text"
+              name="searchQuery"
+              autocomplete="off"
+              placeholder="Пошук зображень..."
+            />
+            <button type="submit" class="button search-btn">
+              <svg width="32" height="32">
+                <use href="./images/icon-search.svg#icon-search"></use>
               </svg>
+            </button>
+          </form>
+        </div>
+      </section>
+      <section class="gallery section">
+        <h2 class="is-hidden">Знайдені зображення</h2>
+        <div class="container gallery--container">
+          <ul class="gallery-list list"></ul>
+          <button type="button" class="load-more">
+            <svg class="spinner is-hidden" viewBox="0 0 50 50">
+              <circle
+                class="path"
+                cx="25"
+                cy="25"
+                r="20"
+                fill="none"
+                stroke-width="5"
+              ></circle>
+            </svg>
             <span class="label">Показати ще</span>
           </button>
-          </div>
-        </section>
+        </div>
+      </section>
     </main>
 
     <script src="/src/index.js" type="module"></script>

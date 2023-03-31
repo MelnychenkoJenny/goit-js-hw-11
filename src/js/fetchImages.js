@@ -7,18 +7,37 @@ export default class ImageApiService {
   constructor() {
     this.searchQuery = '';
     this.page = 1;
-    this.count = 12;
+    this.count = 16;
   }
+
+  // async function getUser() {
+  //   try {
+  //     const response = await axios.get('/user?ID=12345');
+  //     console.log(response);
+  //   } catch (error) {
+  //     console.error(error);
+  //   }
+  // lang=pl,bg&per_page=${this.count}&page=${this.page}
+
   async fetchImages() {
-    console.log(this);
-    
-    const response = await fetch(
-      `${API_URL}?key=${API_KEY}&q=${this.searchQuery}&image_type=photo&orientation=horizontal&safesearch=true&lang=pl,bg&per_page=${this.count}&page=${this.page}`
-    );
-    if (!response.ok) {
-      throw new Error(response.status);
+    try {
+      const response = await axios.get(`${API_URL}`, {
+        params: {
+          key: API_KEY,
+          q: this.searchQuery,
+          image_type: 'photo',
+          orientation: 'horizontal',
+          page: this.page,
+          per_page: this.count,
+          safesearch: true,
+          lang: 'pl,bg',
+        },
+      });
+      // console.log(response.json());
+      return response.data;
+    } catch (error) {
+      throw new Error(error.message);
     }
-    return await response.json();
   }
   get query() {
     return this.searchQuery;

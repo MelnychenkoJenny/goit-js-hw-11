@@ -1,6 +1,8 @@
 import ImageApiService from './js/fetchImages';
 import LoadMoreBtn from './js/load-more-btn';
 import { Notify } from 'notiflix/build/notiflix-notify-aio';
+import SimpleLightbox from 'simplelightbox';
+import 'simplelightbox/dist/simple-lightbox.min.css';
 
 const searchNameImgForm = document.querySelector('#search-form');
 const searchNameImgInput = document.querySelector('input[name="searchQuery"]');
@@ -30,17 +32,25 @@ function onSearchImageClickBtn(e) {
   imageApiService
     .fetchImages()
     .then(data => {
+      console.log(data);
       if (data.hits.length === 0) {
         Notify.failure(
           'На жаль, немає зображень, які відповідають вашому пошуковому запиту. Будь ласка спробуйте ще раз :)'
         );
         loadMoreBtn.hide();
       } else if (data.hits.length < 12) {
-        Notify.success(`Ура! Ми знайшли ${data.totalHits} зображень/зображення.`);
+        Notify.success(
+          `Ура! Ми знайшли ${data.totalHits} зображень/зображення.`
+        );
         loadMoreBtn.hide();
       }
       Notify.success(`Ура! Ми знайшли ${data.totalHits} зображень/зображення.`);
       containerGallery.insertAdjacentHTML('beforeend', makeGalleryMarkUp(data));
+      const imageLightbox = new SimpleLightbox('.gallery-list .gallery__link', {
+        captionsData: 'alt',
+        captionDelay: 250,
+      });
+      smoothScroll(1.2);
       loadMoreBtn.enable();
     })
     .catch(er => console.log(er));
@@ -53,14 +63,24 @@ function onLoadMoreImage() {
   imageApiService
     .fetchImages()
     .then(data => {
-      if (Math.ceil(data.totalHits / imageApiService.count) === imageApiService.page) {
-        Notify.failure(
-          'Вибачте, але Ви досягли кінця результатів пошуку.'
-        );
+      if (
+        Math.ceil(data.totalHits / imageApiService.count) ===
+        imageApiService.page
+      ) {
+        Notify.failure('Вибачте, але Ви досягли кінця результатів пошуку.');
         loadMoreBtn.hide();
       }
-      Notify.success(`Ура! Ми знайшли ${data.totalHits - imageApiService.count} зображень/зображення.`);
+      Notify.success(
+        `Ура! Ми знайшли ще ${
+          data.totalHits - imageApiService.count
+        } зображень/зображення.`
+      );
       containerGallery.insertAdjacentHTML('beforeend', makeGalleryMarkUp(data));
+      const imageLightbox = new SimpleLightbox('.gallery-list .gallery__link', {
+        captionsData: 'alt',
+        captionDelay: 250,
+      });
+      smoothScroll(2);
       loadMoreBtn.enable();
     })
     .catch(er => console.log(er));
@@ -127,4 +147,15 @@ function makeGalleryMarkUp({ hits }) {
 function clearMarkUp() {
   containerGallery.innerHTML = '';
   searchNameImgInput.value = '';
+}
+
+function smoothScroll(num) {
+  const { height: cardHeight } = document
+    .querySelector('.gallery-list')
+    .firstElementChild.getBoundingClientRect();
+
+  window.scrollBy({
+    top: cardHeight * num,
+    behavior: 'smooth',
+  });
 }
