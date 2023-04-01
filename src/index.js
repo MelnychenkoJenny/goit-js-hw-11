@@ -3,6 +3,7 @@ import LoadMoreBtn from './js/load-more-btn';
 import { Notify } from 'notiflix/build/notiflix-notify-aio';
 import SimpleLightbox from 'simplelightbox';
 import 'simplelightbox/dist/simple-lightbox.min.css';
+import debounce from 'lodash.debounce';
 
 const searchNameImgForm = document.querySelector('#search-form');
 const searchNameImgInput = document.querySelector('input[name="searchQuery"]');
@@ -10,11 +11,15 @@ const containerGallery = document.querySelector('.gallery-list');
 
 const imageApiService = new ImageApiService();
 const loadMoreBtn = new LoadMoreBtn({ selector: '.load-more', hidden: true });
+const imageLightbox = new SimpleLightbox('.gallery-list .gallery__link', {
+  captionsData: 'alt',
+  captionDelay: 250,
+});
 
 searchNameImgForm.addEventListener('submit', onSearchImageClickBtn);
 loadMoreBtn.refs.button.addEventListener('click', onLoadMoreImage);
 
-function onSearchImageClickBtn(e) {
+async function onSearchImageClickBtn(e) {
   e.preventDefault();
 
   imageApiService.query = e.target.searchQuery.value.trim();
@@ -29,61 +34,72 @@ function onSearchImageClickBtn(e) {
   loadMoreBtn.show();
   loadMoreBtn.disable();
   clearMarkUp();
-  imageApiService
-    .fetchImages()
-    .then(data => {
-      console.log(data);
-      if (data.hits.length === 0) {
-        Notify.failure(
-          'На жаль, немає зображень, які відповідають вашому пошуковому запиту. Будь ласка спробуйте ще раз :)'
-        );
-        loadMoreBtn.hide();
-      } else if (data.hits.length < 12) {
-        Notify.success(
-          `Ура! Ми знайшли ${data.totalHits} зображень/зображення.`
-        );
-        loadMoreBtn.hide();
-      }
-      Notify.success(`Ура! Ми знайшли ${data.totalHits} зображень/зображення.`);
-      containerGallery.insertAdjacentHTML('beforeend', makeGalleryMarkUp(data));
-      const imageLightbox = new SimpleLightbox('.gallery-list .gallery__link', {
-        captionsData: 'alt',
-        captionDelay: 250,
-      });
-      smoothScroll(1.2);
-      loadMoreBtn.enable();
-    })
-    .catch(er => console.log(er));
+
+  try {
+    const response = await imageApiService.fetchImages();
+
+    if (response.hits.length === 0) {
+      Notify.failure(
+        'На жаль, немає зображень, які відповідають вашому пошуковому запиту. Будь ласка спробуйте ще раз :)'
+      );
+      loadMoreBtn.hide();
+      return;
+    } else if (response.hits.length < 16) {
+      Notify.success(
+        `Ура! Ми знайшли ${response.totalHits} зображень/зображення.`
+      );
+      containerGallery.insertAdjacentHTML(
+        'beforeend',
+        makeGalleryMarkUp(response)
+      );
+      loadMoreBtn.hide();
+      return
+    }
+    Notify.success(
+      `Ура! Ми знайшли ${response.totalHits} зображень/зображення.`
+    );
+    containerGallery.insertAdjacentHTML(
+      'beforeend',
+      makeGalleryMarkUp(response)
+    );
+
+    imageLightbox.refresh();
+    smoothScroll(1.2);
+    loadMoreBtn.enable();
+  } catch (error) {
+    Notify.info('Вибачте. Сталася помилка.');
+  }
 }
 
-function onLoadMoreImage() {
+async function onLoadMoreImage() {
   imageApiService.incrementPage();
   loadMoreBtn.disable();
 
-  imageApiService
-    .fetchImages()
-    .then(data => {
-      if (
-        Math.ceil(data.totalHits / imageApiService.count) ===
-        imageApiService.page
-      ) {
-        Notify.failure('Вибачте, але Ви досягли кінця результатів пошуку.');
-        loadMoreBtn.hide();
-      }
-      Notify.success(
-        `Ура! Ми знайшли ще ${
-          data.totalHits - imageApiService.count
-        } зображень/зображення.`
-      );
-      containerGallery.insertAdjacentHTML('beforeend', makeGalleryMarkUp(data));
-      const imageLightbox = new SimpleLightbox('.gallery-list .gallery__link', {
-        captionsData: 'alt',
-        captionDelay: 250,
-      });
-      smoothScroll(2);
-      loadMoreBtn.enable();
-    })
-    .catch(er => console.log(er));
+  try {
+    const response = await imageApiService.fetchImages();
+    if (
+      Math.ceil(response.totalHits / imageApiService.count) ===
+      imageApiService.page
+    ) {
+      Notify.failure('Вибачте, але Ви досягли кінця результатів пошуку.');
+      loadMoreBtn.hide();
+    }
+    Notify.success(
+      `Ура! Ми знайшли ще ${
+        response.totalHits - imageApiService.count
+      } зображень/зображення.`
+    );
+    containerGallery.insertAdjacentHTML(
+      'beforeend',
+      makeGalleryMarkUp(response)
+    );
+    
+    imageLightbox.refresh();
+    smoothScroll(2);
+    loadMoreBtn.enable();
+  } catch (error) {
+    Notify.info('Вибачте. Сталася помилка.');
+  }
 }
 
 function makeGalleryMarkUp({ hits }) {
@@ -158,4 +174,25 @@ function smoothScroll(num) {
     top: cardHeight * num,
     behavior: 'smooth',
   });
+}
+
+window.onscroll = debounce(function () {
+  scrollFunction();
+}, 300);
+
+function scrollFunction() {
+  console.log(document.body.scrollTop);
+  console.log(document.documentElement.scrollTop);
+  if (document.body.scrollTop > 30 || document.documentElement.scrollTop > 30) {
+    document.getElementById('topBtn').style.display = 'block';
+  } else {
+    document.getElementById('topBtn').style.display = 'none';
+  }
+}
+
+const topBtn = document.querySelector('.top-btn');
+topBtn.addEventListener('click', topFunction);
+function topFunction() {
+  document.body.scrollTop = 0;
+  document.documentElement.scrollTop = 0;
 }

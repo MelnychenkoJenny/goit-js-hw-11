@@ -139,11 +139,9 @@ button {
   right: 0px;
   box-shadow: 0 0 #dc925ab3, inset 0 1px #ecb998;
   transition: fill 250ms cubic-bezier(0.4, 0, 0.2, 1);
-  
 }
 .search-btn:hover {
- 
-  fill: #68513F;
+  fill: #68513f;
   animation: none;
 }
 
@@ -248,11 +246,10 @@ button {
   cursor: pointer;
 }
 .load-more:hover,
-.load-more:hover {
-  box-shadow: 0 0 10px 0 #68513f inset, 0 0 10px 4px #68513f;
+.top-btn:hover {
+  box-shadow: 0 0 10px 0 #917763 inset, 0 0 10px 4px #917763;
   color: #68513f;
 }
-.load-more:disabled,
 .load-more:disabled {
   box-shadow: 0 0 40px 40px #a5a4a5 inset, 0 0 0 0 #a5a4a5;
   color: #ffffff;
@@ -294,4 +291,19 @@ button {
 
 .label {
   font-size: 16px;
+}
+
+.top-btn {
+  display: none;
+  z-index: 99;
+  color: #fff;
+  background-color: #e7ded8;
+  border: 1px solid #ffffff;
+  border-radius: 30px;
+  outline: none;
+  padding: 10px;
+  font-size: 18px;
+  position: fixed;
+  bottom: 20px;
+  right: 15px;
 }

@@ -9,16 +9,6 @@ export default class ImageApiService {
     this.page = 1;
     this.count = 16;
   }
-
-  // async function getUser() {
-  //   try {
-  //     const response = await axios.get('/user?ID=12345');
-  //     console.log(response);
-  //   } catch (error) {
-  //     console.error(error);
-  //   }
-  // lang=pl,bg&per_page=${this.count}&page=${this.page}
-
   async fetchImages() {
     try {
       const response = await axios.get(`${API_URL}`, {
