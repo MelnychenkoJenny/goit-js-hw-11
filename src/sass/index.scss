@@ -188,7 +188,7 @@ button {
 }
 
 .gallery__thumb {
-  width: 370px;
+  max-width: 370px;
   height: 220px;
   display: flex;
   align-items: center;
